@@ -193,7 +193,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
         if let messageText = messages[indexPath.row].text {
             return CGSize(width: collectionView.frame.size.width, height: messageText.stringSize.height + ViewController.messageHeightPadding)
         }
-        return CGSize(width: view.bounds.width, height: 1000) // Random default
+        return CGSize(width: view.bounds.width, height: 120) // Random default
     }
 }
 

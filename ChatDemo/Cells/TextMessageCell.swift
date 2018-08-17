@@ -44,7 +44,6 @@ class TextMessageCell: MessageCell, ReusableView {
         messageBubbleView.layer.cornerRadius = 10
         messageBubbleView.clipsToBounds = true
         
-        
         contentView.addSubview(messageBubbleView)
         messageBubbleView.addSubview(messageLabel)
     }

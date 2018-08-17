@@ -50,6 +50,7 @@ class MediaMessageCell: MessageCell, ReusableView {
             mediaView.image = image
             messageBubbleView.backgroundColor = message.isSender ? blueBubbleColor : lightGrayBubbleColor
             messageBubbleView.layer.maskedCorners = senderMaskedCorners(isSender: message.isSender)
+            updateMessageWidthConstraint(isSender: message.isSender)
             layoutIfNeeded()
         }
     }
@@ -65,5 +66,24 @@ class MediaMessageCell: MessageCell, ReusableView {
             make.left.right.equalTo(messageBubbleView).inset(8)
             make.top.bottom.equalTo(messageBubbleView).inset(8)
         }
+    }
+    
+    func updateMessageWidthConstraint(isSender: Bool) {
+        messageWidthConstraint?.deactivate()
+        messageBubbleView.snp.remakeConstraints { (make) in
+            make.height.equalTo(120) // default
+            make.width.equalTo(120) // default
+            make.centerY.equalTo(contentView)
+            if isSender {
+                make.right.equalTo(contentView).inset(TextMessageCell.leftRightMargin)
+            } else {
+                make.left.equalTo(contentView).inset(TextMessageCell.leftRightMargin)
+            }
+        }
+        mediaView.snp.remakeConstraints { (make) in
+            make.left.right.equalTo(messageBubbleView).inset(TextMessageCell.leftRightMargin)
+            make.top.bottom.equalTo(messageBubbleView)
+        }
+        layoutIfNeeded()
     }
 }
