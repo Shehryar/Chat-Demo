@@ -11,12 +11,15 @@ import UIKit
 import SnapKit
 
 class TextMessageCell: MessageCell, ReusableView {
+    static let bubbleWidthPadding: CGFloat = 15.0
+    static let leftRightMargin: CGFloat = 8.0
     var textMessage: Message?
     let messageBubbleView = UIView()
     var messageLabel = UILabel()
     var messageWidthConstraint: Constraint?
     let lightGrayBubbleColor = UIColor(red: 230/250, green: 230/250, blue: 230/250, alpha: 1)
     let blueBubbleColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1)
+    
     func senderMaskedCorners(isSender: Bool) -> CACornerMask {
         if isSender {
             return [.layerMinXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMinYCorner]
@@ -73,17 +76,17 @@ class TextMessageCell: MessageCell, ReusableView {
     func updateMessageWidthConstraint(width: CGFloat, isSender: Bool) {
         messageWidthConstraint?.deactivate()
         messageBubbleView.snp.remakeConstraints { (make) in
-            make.width.equalTo(width + 15)
+            make.width.equalTo(width + TextMessageCell.bubbleWidthPadding)
             make.height.equalTo(contentView)
             make.centerY.equalTo(contentView)
             if isSender {
-                make.right.equalTo(contentView).inset(8)
+                make.right.equalTo(contentView).inset(TextMessageCell.leftRightMargin)
             } else {
-                make.left.equalTo(contentView).inset(8)
+                make.left.equalTo(contentView).inset(TextMessageCell.leftRightMargin)
             }
         }
         messageLabel.snp.remakeConstraints { (make) in
-            make.left.right.equalTo(messageBubbleView).inset(8)
+            make.left.right.equalTo(messageBubbleView).inset(TextMessageCell.leftRightMargin)
             make.top.bottom.equalTo(messageBubbleView)
         }
         layoutIfNeeded()

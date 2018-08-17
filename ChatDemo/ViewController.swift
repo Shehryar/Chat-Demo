@@ -11,6 +11,8 @@ import SnapKit
 import Foundation
 
 class ViewController: UIViewController {
+    static let keyboardToolbarHeight: CGFloat = 48.0
+    static let messageHeightPadding: CGFloat = 10.0
     
     var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -88,7 +90,7 @@ class ViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.isScrollEnabled = true
         collectionView.alwaysBounceVertical = true
-        collectionView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 48, right: 0)
+        collectionView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: ViewController.keyboardToolbarHeight, right: 0)
         messageField.delegate = self
         registerCells()
     }
@@ -106,7 +108,7 @@ class ViewController: UIViewController {
         
         messageField.snp.makeConstraints({ (make) in
             make.left.right.equalTo(view)
-            make.height.equalTo(48)
+            make.height.equalTo(ViewController.keyboardToolbarHeight)
             bottomConstraint = make.bottom.equalTo(view).constraint
         })
     }
@@ -189,7 +191,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
         if let messageText = messages[indexPath.row].text {
-            return CGSize(width: collectionView.frame.size.width, height: messageText.stringSize.height + 10)
+            return CGSize(width: collectionView.frame.size.width, height: messageText.stringSize.height + ViewController.messageHeightPadding)
         }
         return CGSize(width: view.bounds.width, height: 1000) // Random default
     }
